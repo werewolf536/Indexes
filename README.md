@@ -58,7 +58,19 @@ where date(p.payment_date) = '2005-07-30' and p.customer_id = c.customer_id;
                 -> Sort: c.customer_id
                     -> Stream results  (cost=7449 rows=16500)
                         -> Nested loop inner join  (cost=7449 rows=16500)
-                            -> Filter: (cast(p.payment_date as date) = '2005-07-30')  (cost=1674 rows=16500)
-                                -> Table scan on p  (cost=1674 rows=16500)
-                            -> Single-row index lookup on c using PRIMARY (customer_id=p.customer_id)  (cost=0.25 rows=1)
 ```
+
+## Доработка
+
+```
+select distinct concat(c.last_name, ' ', c.first_name), sum(p.amount) 
+from payment p 
+join customer c on c.customer_id = p.customer_id
+join rental r on r.rental_date = p.payment_date
+jOIN inventory i on i.inventory_id = r.inventory_id 
+where p.payment_date >= '2005-07-30' and p.payment_date < date_add('2005-07-30', INTERVAL 1 DAY) 
+group by p.customer_id;
+```
+![img](/img/2023-11-02_13-34-07.png)
+![img](/img/2023-11-02_13-32-27.png)
+
