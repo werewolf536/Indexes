@@ -9,6 +9,7 @@ CONCAT(  ROUND ((SUM(INDEX_LENGTH)*100 / SUM(DATA_LENGTH))), ' %')  AS '% Indexe
 FROM INFORMATION_SCHEMA.TABLES
 WHERE  TABLE_SCHEMA = 'sakila';
 ```
+![img](/img/2023-11-02_11-54-56.png)
 
 ## Задание 2
 Выполните explain analyze следующего запроса:
